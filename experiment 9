@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 char stack[20];
-int top;
+int top,count=0;
 void push()
 {
  top=top+1;
@@ -23,7 +23,7 @@ int main()
 {
  int m,i,j,k,l,a,len;
  char input[20],rem_input[20];
- printf("Simulation of Pushdown Automata for 0n1n\n");
+ printf("Simulation of PDA for n 0's followed by 2n 1's\n");
  printf("Enter a string : ");
  scanf("%s",input);
  l=strlen(input);
@@ -50,11 +50,27 @@ int main()
  }
  if(input[0]=='1')
  {
+ count++;
+ if(count%2==0)
+ {
  a=pop();
  if(a==0)
  {
  printf("String not accepted");
  goto b;
+ }
+ else
+ {
+ m=0;
+ for(k=1;k<len;k++)
+ {
+ rem_input[m]=input[k];
+ m=m+1;
+ }
+ }
+ rem_input[m]='\0';
+ strcpy(input,rem_input);
+ printf("%s\t%s\n",stack,input);
  }
  else
  {
@@ -72,7 +88,8 @@ int main()
  break;
  }
  j=j+1;
- if(j==(l))
+ //printf("j = %d\t l = %d\n",j,l);
+ if(j==l)
  {
  break;
  }

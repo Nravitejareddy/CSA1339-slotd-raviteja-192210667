@@ -1,90 +1,67 @@
 #include<stdio.h>
 #include<string.h>
-char stack[20];
-int top;
-void push()
-{
- top=top+1;
- stack[top]='0';
- stack[top+1]='\0';
-}
-int pop()
-{
- if(top<1)
- return(0);
- else
- {
- stack[top]='\0';
- top=top-1;
- return(1);
- }
-}
 int main()
 {
- int m,i,j,k,l,a,len;
- char input[20],rem_input[20];
- printf("Simulation of Pushdown Automata for 0n1n\n");
- printf("Enter a string : ");
- scanf("%s",input);
- l=strlen(input);
- j=0;stack[0]='Z';top=0;
- printf("Stack\tInput\n");
- printf("%s\t%s\n",stack,input);
- while(1)
+char s[100];
+int i,flag,flag1,a,b;
+int l,count1,count2;
+printf("enter a string to check:");
+scanf("%s",s);
+l=strlen(s);
+flag=1;
+for(i=0;i<l;i++)
+{
+if(s[i]!='0' && s[i]!='1')
+{
+ flag=0;
+}
+}
+if(flag!=1)
+printf("string is Not Valid\n");
+if(flag==1)
+{
+i=0;count1=0;
+while(s[i]=='0') // Count the no of 0s in the front
+{
+count1++;
+i++;
+}
+while(s[i]=='1')
+{
+i++; // Skip all 1s
+}
+flag1=1;
+count2=0;
+while(i<l)
+{
+if(s[i]=='0')// Count the no of 0s at the end
+{
+count2++;
+}
+else
+{
+flag1=0;
+}
+i++;
+}
+if(flag1==1)
+{
+if(count1==count2)
  {
- len=strlen(input);
- while(len>0)
- {
- if(input[0]=='0')
- {
- push();
- m=0;
- for(k=1;k<len;k++)
- {
- rem_input[m]=input[k];
- m=m+1;
- }
- rem_input[m]='\0';
- strcpy(input,rem_input);
- printf("%s\t%s\n",stack,input);
- }
- if(input[0]=='1')
- {
- a=pop();
- if(a==0)
- {
- printf("String not accepted");
- goto b;
- }
- else
- {
- m=0;
- for(k=1;k<len;k++)
- {
- rem_input[m]=input[k];
- m=m+1;
- }
- rem_input[m]='\0';
- strcpy(input,rem_input);
- printf("%s\t%s\n",stack,input);
- }
- }
- break;
- }
- j=j+1;
- if(j==(l))
- {
- break;
- }
- }
- if(top>=1)
- {
- printf("String not accepted");
+ printf("The string satisfies the condition 0n1m0n\n");
+ printf("String Accepted\n");
  }
  else
  {
- printf("String accepted");
+ printf("The string does not satisfy the condition 0n1m0n\n");
+ printf("String Not Accepted\n");
  }
- b:
- printf(".............");
+}
+else
+ {
+ printf("The string does not satisfy the condition 0n1m0n\n");
+ printf("String Not Accepted\n");
+}
+}
+return 0;
 }
